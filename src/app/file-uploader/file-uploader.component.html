@@ -1,3 +1,5 @@
+<p-progressBar *ngIf="showProgressBar" [style]="{height: '10px'}" mode="indeterminate"></p-progressBar>
+
 <p-fileUpload (onSelect)="onSelect($event)"
               (uploadHandler)="customHandler($event.files)"
               [chooseLabel]="selectedFiles.length ? '&nbsp; 1. Add additional files' : '&nbsp; 1. Select fasta alignment(s)'"

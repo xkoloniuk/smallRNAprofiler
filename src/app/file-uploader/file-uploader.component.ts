@@ -13,6 +13,7 @@ export class FileUploaderComponent {
 
   checkedFiles: any[] = [];
   selectedFiles: { key: string, file: File }[] = [];
+  public showProgressBar = false;
 
   constructor(private messageService: MessageService, private fastaReader: FastaReaderService) {
 
@@ -28,8 +29,12 @@ export class FileUploaderComponent {
   }
 
   customHandler(files: File[]) {
+    this.showProgressBar = true;
     files.forEach((file: File) => {
-      this.fastaReader.readFastaFile(file).then(data => processNameSeqData(data))
+      this.fastaReader.readFastaFile(file).then(data => {
+        this.showProgressBar = false;
+        return processNameSeqData(data)
+      })
     })
   }
 }
