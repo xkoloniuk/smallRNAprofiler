@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {MessageService} from "primeng/api";
+import {FastaReaderService} from "../fasta-reader.service";
+import processNameSeqData from "../../util/util";
 
 @Component({
   selector: 'app-file-uploader',
@@ -12,14 +14,12 @@ export class FileUploaderComponent {
   checkedFiles: any[] = [];
   selectedFiles: { key: string, file: File }[] = [];
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private fastaReader: FastaReaderService) {
 
 
   }
 
   onSelect(event: any) {
-    console.log(event);
-    console.dir(event);
     for (let file of event.files) {
       this.selectedFiles.push({key: file.name, file: file});
     }
@@ -27,7 +27,9 @@ export class FileUploaderComponent {
     this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
   }
 
-  customHandler(files: any) {
-    console.log(files)
+  customHandler(files: File[]) {
+    files.forEach((file: File) => {
+      this.fastaReader.readFastaFile(file).then(data => processNameSeqData(data))
+    })
   }
 }
