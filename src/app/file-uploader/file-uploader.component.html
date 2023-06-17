@@ -1,21 +1,23 @@
 <p-progressBar *ngIf="showProgressBar" [style]="{height: '10px'}" mode="indeterminate"></p-progressBar>
+<ng-container *ngIf="!mapObjects.length">
 
-<p-fileUpload (onSelect)="onSelect($event)"
-              (uploadHandler)="customHandler($event.files)"
-              [chooseLabel]="selectedFiles.length ? '&nbsp; 1. Add additional files' : '&nbsp; 1. Select fasta alignment(s)'"
-              [customUpload]="true"
-              [multiple]="true"
-              accept=".fasta"
-              cancelLabel="Reset"
-              name="files[]"
-              uploadLabel="2. Process fasta alignment(s)"
->
+  <p-fileUpload (onSelect)="onSelect($event)"
+                (uploadHandler)="customHandler($event.files)"
+                [chooseLabel]="selectedFiles.length ? '&nbsp; 1. Add additional files' : '&nbsp; 1. Select fasta alignment(s)'"
+                [customUpload]="true"
+                [multiple]="true"
+                accept=".fasta"
+                cancelLabel="Reset"
+                name="files[]"
+                uploadLabel="2. Process fasta alignment(s)"
+  >
 
-  <div *ngFor="let item of selectedFiles" class="field-checkbox">
-    <p-checkbox [(ngModel)]="checkedFiles" [inputId]="item.key" [value]="item.file" name="group"></p-checkbox>
-    <!--    <label [for]="item.key">{{ item.key }}</label>-->
-  </div>
-</p-fileUpload>
+    <div *ngFor="let item of selectedFiles" class="field-checkbox">
+      <p-checkbox [(ngModel)]="checkedFiles" [inputId]="item.key" [value]="item.file" name="group"></p-checkbox>
+      <!--    <label [for]="item.key">{{ item.key }}</label>-->
+    </div>
+  </p-fileUpload>
+</ng-container>
 
 
 
