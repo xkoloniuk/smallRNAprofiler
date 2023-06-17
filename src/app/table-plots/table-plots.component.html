@@ -1,0 +1,19 @@
+<div class="container">
+
+
+  <p>{{mappings.length}} mappings received</p>
+
+  <p-chart [data]="basicData" [options]="basicOptions" class="max80vh" type="bar"></p-chart>
+</div>
+
+<style>
+
+  /*  .container {*/
+  /*    width: 90vw;*/
+  /*    height: 50vh;*/
+  /*  }*/
+
+  .max80vh {
+    max-height: 90vh !important;
+  }
+</style>

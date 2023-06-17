@@ -1,5 +1,5 @@
 <p-progressBar *ngIf="showProgressBar" [style]="{height: '10px'}" mode="indeterminate"></p-progressBar>
-<ng-container *ngIf="!mapObjects.length">
+<ng-container>
 
   <p-fileUpload (onSelect)="onSelect($event)"
                 (uploadHandler)="customHandler($event.files)"
@@ -14,10 +14,11 @@
 
     <div *ngFor="let item of selectedFiles" class="field-checkbox">
       <p-checkbox [(ngModel)]="checkedFiles" [inputId]="item.key" [value]="item.file" name="group"></p-checkbox>
-      <!--    <label [for]="item.key">{{ item.key }}</label>-->
+      <label [for]="item.key">{{ item.key }}</label>
     </div>
   </p-fileUpload>
 </ng-container>
+<p-messages></p-messages>
 
 
 

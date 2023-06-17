@@ -8,19 +8,27 @@ import {FileUploaderComponent} from './file-uploader/file-uploader.component';
 import {StatusHeaderComponent} from './status-header/status-header.component';
 import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
+import {TablePlotsComponent} from './table-plots/table-plots.component';
+import {RouterModule} from "@angular/router";
+import {WelcomePageComponent} from './welcome-page/welcome-page.component';
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   declarations: [
     AppComponent,
     FileUploaderComponent,
-    StatusHeaderComponent
+    StatusHeaderComponent,
+    TablePlotsComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FileUploadModule,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    RouterModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

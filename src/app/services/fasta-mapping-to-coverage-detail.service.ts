@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Direction, Sequence, SequenceType} from "../interfaces/Sequence";
-import {MappedSequenceObject} from "../interfaces/MappedSequenceObject";
+import {Direction, Sequence, SequenceType} from "../../interfaces/Sequence";
+import {Coverage, MappedSequenceObject} from "../../interfaces/MappedSequenceObject";
 
 @Injectable({
   providedIn: 'root'
@@ -17,68 +17,16 @@ export class FastaMappingToCoverageDetailService {
 // calculates zero coverage if for current position:
 // if both plus and minus coverage are zero then it counts as zero for the position
 //   all zeroes are summed
-// returns number
-  private getGenomeCoverage(genomeLength: number, detailCoverageData: any): number {
-    let zeroCount = 0;
-    detailCoverageData.minus.forEach((_: number, i: number) => {
-      if (detailCoverageData.minus[i] === 0 && detailCoverageData.plus[i] === 0) {
-        zeroCount++
-      }
-    })
-    return zeroCount === 0 ? 0 : Number(((1 - (zeroCount / genomeLength)) * 100).toFixed(2))
-  }
-
-
-// as target-- object file with calculated genome coverage, prepared nonredundant and redundant coverage arrays (like:
-// redundant: {position array [1....Ref length], positive array [zeroes], negative array[zeroes]})
-// as unit-- a read with name, which contains reverse if applicable, seq, uniqueness, seqLength, mapping start
-
-// for each read, array is created that takes the unit mapping start position as the first value and add 1 to each next position
-//in this way there is array of read positions on reference, i.e. [100, 101, 102, ..., 121]
-  private calcCoverage(read: Sequence, target: any) {
-    if (read.type === SequenceType.REFERENCE || !read.mapStart) return
-
-    const firstMappedPositionOnReference = read.mapStart || 0;
-    const arrayOfReadMappedPositions = Array.from({length: read.length}).fill(0).map((_, i) => 1 + i + firstMappedPositionOnReference)
-
-    const coverage: any = {
-      redundant: {},
-      nonredundant: {}
-    }
-
-    if (read.orientation === Direction.REVERSE) {
-      if (!read.redundant) {
-        arrayOfReadMappedPositions.map(pos => {
-          coverage.redundant.plus[pos]++
-          coverage.nonredundant.plus[pos]++
-        })
-      } else {
-        arrayOfReadMappedPositions.map(pos => coverage.redundant.plus[pos]++)
-      }
-    } else {
-      if (!read.redundant) {
-        arrayOfReadMappedPositions.map(pos => {
-          coverage.redundant.minus[pos]--
-          coverage.nonredundant.minus[pos]--
-        })
-      } else {
-        arrayOfReadMappedPositions.map(pos => coverage.redundant.minus[pos]--)
-      }
-    }
-
-    return coverage
-  }
-
 
   // splits obtain text stream into array strings like ['RefSeqName\nAGCTCGTCTGTGCT----\n', 'ReadName\n-----------AGTCTCGTCTCGGCTTCGCT------..--',..]
-  private splitMultiFasta(target: any) {
-    const nameSequenceConcatenation = target.split(">");
+  public splitMultiFasta(input: string[]) {
+    // const nameSequenceConcatenation = split(">");
     const reads: Sequence[] = [];
     const dnaSeq = /[ATCG]{18,32}/
     const regexGaps = /^-*/
     const uniqueSet = new Set
 
-    //  here the reference object is assigned
+    //  here the reference object is instantiated
     const mappedSequenceObject: MappedSequenceObject = {
       name: '',
       sequence: '',
@@ -107,29 +55,28 @@ export class FastaMappingToCoverageDetailService {
     }
 
 
-    nameSequenceConcatenation.forEach((nameSeqString: string, i: number) => {
+    input.forEach((nameSeqString: string, i: number) => {
         //   [0] value is empty due to split function
-        if (!nameSeqString || !i) return
+        if (i === 0) return
 
 
         const tmpSplit = nameSeqString.split('\n')
-        const tmpFirstFastaLine = tmpSplit[0];
-        const tmpSecondFastaLine = tmpSplit[1];
-        // the whole reference sequence is taken, including potential gaps
-        const tmpSeq = i === 1 ? tmpSecondFastaLine : tmpSecondFastaLine.match(dnaSeq)?.[0] ?? '';
-        const gapsBeforeSeq = tmpSecondFastaLine.match(regexGaps)?.[0] ?? '';
+        const fastaName = tmpSplit[0];
+        const fastaSeqLine = tmpSplit[1];
 
 
         // this should be the reference
         if (i === 1) {
-          if (!tmpSeq.length) return
+          const referenceSequence = fastaSeqLine
+
+          if (!referenceSequence.length) return
           // @ts-ignore
-          const zeroesArray: number[] = Array.from({length: tmpSeq.length}).fill(0)
+          const zeroesArray: number[] = Array.from({length: referenceSequence.length}).fill(0)
           const positions = zeroesArray.map((_, i) => 1 + i)
 
-          mappedSequenceObject.name = tmpFirstFastaLine;
-          mappedSequenceObject.sequence = tmpSeq;
-          mappedSequenceObject.length = tmpSeq.length;
+          mappedSequenceObject.name = fastaName;
+          mappedSequenceObject.sequence = referenceSequence;
+          mappedSequenceObject.length = referenceSequence.length;
           mappedSequenceObject.coverage.redundant = {
             minus: zeroesArray.slice(),
             plus: zeroesArray.slice(),
@@ -143,14 +90,17 @@ export class FastaMappingToCoverageDetailService {
           return
         }
 
+        const fastaTrimmedReadSequence = fastaSeqLine.match(dnaSeq)?.[0] ?? '';
+        const gapsBeforeSeq = fastaSeqLine.match(regexGaps)?.[0] ?? '';
+
         const read: Sequence = {
-          name: tmpFirstFastaLine,
+          name: fastaName,
           type: SequenceType.READ,
-          sequence: tmpSeq,
-          redundant: uniqueSet.has(tmpSeq) ? !!uniqueSet.add(tmpSeq) : false,
-          length: tmpSeq.length,
+          sequence: fastaTrimmedReadSequence,
+          redundant: uniqueSet.has(fastaTrimmedReadSequence) ? !!uniqueSet.add(fastaTrimmedReadSequence) : false,
+          length: fastaTrimmedReadSequence.length,
           mapStart: gapsBeforeSeq?.length || 0,
-          orientation: tmpFirstFastaLine.endsWith('reversed)') ? Direction.REVERSE : Direction.FORWARD,
+          orientation: fastaName.endsWith('reversed)') ? Direction.REVERSE : Direction.FORWARD,
         }
 
         this.calcCoverage(read, mappedSequenceObject.coverage)
@@ -173,5 +123,52 @@ export class FastaMappingToCoverageDetailService {
 
 // file name is attached to the dataset in function 'showFiles'
     return mappedSequenceObject
+  }
+
+
+// as target-- object file with calculated genome coverage, prepared nonredundant and redundant coverage arrays (like:
+// redundant: {position array [1....Ref length], positive array [zeroes], negative array[zeroes]})
+// as unit-- a read with name, which contains reverse if applicable, seq, uniqueness, seqLength, mapping start
+
+// for each read, array is created that takes the unit mapping start position as the first value and add 1 to each next position
+
+// returns number
+  private getGenomeCoverage(genomeLength: number, detailCoverageData: any): number {
+    let zeroCount = 0;
+    detailCoverageData.minus.forEach((_: number, i: number) => {
+      if (detailCoverageData.minus[i] === 0 && detailCoverageData.plus[i] === 0) {
+        zeroCount++
+      }
+    })
+    return zeroCount === 0 ? 0 : Number(((1 - (zeroCount / genomeLength)) * 100).toFixed(2))
+  }
+
+//in this way there is array of read positions on reference, i.e. [100, 101, 102, ..., 121]
+  private calcCoverage(read: Sequence, coverage: { redundant: Coverage; nonredundant: Coverage }) {
+    if (read.type === SequenceType.REFERENCE || !read.mapStart) return
+
+    const firstMappedPositionOnReference = read.mapStart || 0;
+    const arrayOfReadMappedPositions = Array.from({length: read.length}).fill(0).map((_, i) => 1 + i + firstMappedPositionOnReference)
+
+    if (read.orientation === Direction.REVERSE) {
+
+      if (!read.redundant) {
+        arrayOfReadMappedPositions.map(pos => {
+          coverage.redundant.plus[pos]++
+          coverage.nonredundant.plus[pos]++
+        })
+      } else {
+        arrayOfReadMappedPositions.map(pos => coverage.redundant.plus[pos]++)
+      }
+    } else {
+      if (!read.redundant) {
+        arrayOfReadMappedPositions.map(pos => {
+          coverage.redundant.minus[pos]--
+          coverage.nonredundant.minus[pos]--
+        })
+      } else {
+        arrayOfReadMappedPositions.map(pos => coverage.redundant.minus[pos]--)
+      }
+    }
   }
 }

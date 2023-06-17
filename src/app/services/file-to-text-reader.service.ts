@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FastaReaderService {
+export class FileToTextReaderService {
   constructor() {
   }
 
@@ -12,6 +12,9 @@ export class FastaReaderService {
       const reader = new FileReader();
 
       reader.onload = (event: ProgressEvent<FileReader>) => {
+        if (!event.target?.result) {
+          return
+        }
         const fileContent = event.target?.result as string;
         const lines = fileContent.split('>');
         resolve(lines);

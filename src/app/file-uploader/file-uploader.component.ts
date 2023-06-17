@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {MessageService} from "primeng/api";
-import {FastaReaderService} from "../fasta-reader.service";
-import processNameSeqData from "../../util/util";
+import {FileToTextReaderService} from "../services/file-to-text-reader.service";
+import {FastaMappingToCoverageDetailService} from "../services/fasta-mapping-to-coverage-detail.service";
+import {MappingService} from "../services/mapping.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-file-uploader',
@@ -16,7 +18,7 @@ export class FileUploaderComponent {
   public showProgressBar = false;
   public mapObjects: any[] = [];
 
-  constructor(private messageService: MessageService, private fastaReader: FastaReaderService) {
+  constructor(private messageService: MessageService, private fileReader: FileToTextReaderService, private fastaMappingToCoverage: FastaMappingToCoverageDetailService, private mappingService: MappingService, private router: Router) {
   }
 
   onSelect(event: any) {
@@ -24,16 +26,22 @@ export class FileUploaderComponent {
       this.selectedFiles.push({key: file.name, file: file});
     }
 
-    this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
   }
 
-  customHandler(files: File[]) {
+  async customHandler(files: File[]) {
     this.showProgressBar = true;
+
+
     files.forEach((file: File) => {
-      this.fastaReader.readFastaFile(file).then(data => {
-        this.mapObjects.push(processNameSeqData(data))
+      this.fileReader.readFastaFile(file).then(data => {
+        this.mapObjects.push(this.fastaMappingToCoverage.splitMultiFasta(data))
+        this.mappingService.addMappings([this.fastaMappingToCoverage.splitMultiFasta(data)])
         this.showProgressBar = false;
+        this.router.navigate(['../plots'])
+
       })
     })
   }
+
+
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FastaReaderService } from './fasta-reader.service';
+import { MappingService } from './mapping.service';
 
-describe('FastaReaderService', () => {
-  let service: FastaReaderService;
+describe('MappingService', () => {
+  let service: MappingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FastaReaderService);
+    service = TestBed.inject(MappingService);
   });
 
   it('should be created', () => {
