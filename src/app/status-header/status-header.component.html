@@ -1,6 +1,6 @@
-<div class="w-screen h-3rem mb-4 bg-blue-500 flex justify-content-between">
-  <ng-content>
+<div class="w-screen h-3rem mb-4 bg-blue-50 flex justify-content-start align-items-center gap-6 pl-8">
 
+  <a routerLink="/">Start</a>
+  <a *ngIf="showPlotsLink" routerLink="/plots">Plots</a>
 
-  </ng-content>
 </div>

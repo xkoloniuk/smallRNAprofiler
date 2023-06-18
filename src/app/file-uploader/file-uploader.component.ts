@@ -4,6 +4,8 @@ import {FileToTextReaderService} from "../services/file-to-text-reader.service";
 import {FastaMappingToCoverageDetailService} from "../services/fasta-mapping-to-coverage-detail.service";
 import {MappingService} from "../services/mapping.service";
 import {Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
+import {LinksService} from "../services/links.service";
 
 @Component({
   selector: 'app-file-uploader',
@@ -18,7 +20,10 @@ export class FileUploaderComponent {
   public showProgressBar = false;
   public mapObjects: any[] = [];
 
-  constructor(private messageService: MessageService, private fileReader: FileToTextReaderService, private fastaMappingToCoverage: FastaMappingToCoverageDetailService, private mappingService: MappingService, private router: Router) {
+  private myValueSubject = new BehaviorSubject<boolean>(true);
+  showPlotsLink$ = this.myValueSubject.asObservable();
+
+  constructor(private messageService: MessageService, private fileReader: FileToTextReaderService, private fastaMappingToCoverage: FastaMappingToCoverageDetailService, private mappingService: MappingService, private router: Router, private linksService: LinksService) {
   }
 
   onSelect(event: any) {
@@ -38,6 +43,7 @@ export class FileUploaderComponent {
         this.mappingService.addMappings([this.fastaMappingToCoverage.splitMultiFasta(data)])
         this.showProgressBar = false;
         this.router.navigate(['../plots'])
+        this.linksService.updateData(true)
 
       })
     })

@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container flex flex-column align-items-center justify-content-center">
 
 
   <p>{{mappings.length}} mappings received</p>
 
-  <p-chart [data]="basicData" [options]="basicOptions" class="max80vh" type="bar"></p-chart>
+  <p-chart [data]="basicData" [options]="basicOptions" height="80vh" type="bar" width="90vw"></p-chart>
 </div>
 
 <style>
@@ -13,7 +13,5 @@
   /*    height: 50vh;*/
   /*  }*/
 
-  .max80vh {
-    max-height: 90vh !important;
-  }
+
 </style>
