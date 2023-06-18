@@ -1,5 +1,5 @@
-<p-progressBar *ngIf="showProgressBar" [style]="{height: '10px'}" mode="indeterminate"></p-progressBar>
-<ng-container>
+<div class="pt-4">
+  <p-progressBar *ngIf="showProgressBar" [style]="{height: '10px'}" mode="indeterminate"></p-progressBar>
 
   <p-fileUpload (onSelect)="onSelect($event)"
                 (uploadHandler)="customHandler($event.files)"
@@ -17,7 +17,7 @@
       <label [for]="item.key">{{ item.key }}</label>
     </div>
   </p-fileUpload>
-</ng-container>
+</div>
 <p-messages></p-messages>
 
 

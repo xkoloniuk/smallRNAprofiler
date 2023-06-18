@@ -1,17 +1,9 @@
 <div class="container flex flex-column align-items-center justify-content-center">
 
-
-  <p>{{mappings.length}} mappings received</p>
-
   <p-chart [data]="basicData" [options]="basicOptions" height="80vh" type="bar" width="90vw"></p-chart>
+  <div class="w-screen flex justify-content-end p-3">
+    <span>{{mappings.length}} mappings received</span>
+  </div>
+  <app-coverage-mapping></app-coverage-mapping>
 </div>
 
-<style>
-
-  /*  .container {*/
-  /*    width: 90vw;*/
-  /*    height: 50vh;*/
-  /*  }*/
-
-
-</style>

@@ -1,0 +1,12 @@
+<ng-container *ngFor="let dataset of datasets">
+  <p>{{dataset.name}}</p>
+  <div class="flex justify-content-between">
+
+    <p-chart [data]="dataset.dataCoverage" [options]="basicOptions" height="40vh" type="bar" width="60vw"></p-chart>
+    <p-chart [data]="dataset.dataSize" [options]="basicOptions" height="40vh" type="bar" width="30vw"></p-chart>
+  </div>
+
+  <hr>
+</ng-container>
+
+

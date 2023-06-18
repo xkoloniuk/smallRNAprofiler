@@ -12,6 +12,8 @@ import {TablePlotsComponent} from './table-plots/table-plots.component';
 import {RouterModule} from "@angular/router";
 import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {ChartModule} from "primeng/chart";
+import { CoverageMappingComponent } from './coverage-mapping/coverage-mapping.component';
+import { SizeDistributionComponent } from './size-distribution/size-distribution.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {ChartModule} from "primeng/chart";
     FileUploaderComponent,
     StatusHeaderComponent,
     TablePlotsComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    CoverageMappingComponent,
+    SizeDistributionComponent
   ],
   imports: [
     BrowserModule,

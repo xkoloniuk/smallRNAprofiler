@@ -15,22 +15,16 @@ export class TablePlotsComponent implements OnInit {
   basicOptions: any;
 
   constructor(private mappingService: MappingService) {
-
-
   }
 
   ngOnInit(): void {
     this.mappingService.mappings$.subscribe((mappings) => {
       this.mappings = mappings
-
-      console.log(mappings)
-
-
       this.basicData = {
         labels: mappings.map(mapping => mapping.name),
         datasets: [
           {
-            label: 'countReadsForward',
+            label: 'Reads per mapping',
             data: mappings.map(mapping => mapping.mappedReads.length),
             borderWidth: 1
           }

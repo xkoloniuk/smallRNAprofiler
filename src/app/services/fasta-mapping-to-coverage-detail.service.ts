@@ -108,13 +108,12 @@ export class FastaMappingToCoverageDetailService {
 
       }
     )
-
-    const uniques = new Set(reads.flatMap(({sequence}) => sequence))
+    const uniques = new Set(mappedSequenceObject.mappedReads.flatMap(({sequence}) => sequence))
 
     mappedSequenceObject.countReadsReverse = mappedSequenceObject.mappedReads.filter(read => read.orientation === Direction.REVERSE).length;
     mappedSequenceObject.countReadsForward = mappedSequenceObject.mappedReads.filter(read => read.orientation === Direction.FORWARD).length;
     mappedSequenceObject.ratioFrwRev = Number((mappedSequenceObject.countReadsForward / mappedSequenceObject.countReadsReverse).toFixed(1));
-    mappedSequenceObject.countReadsAll = reads.length;
+    mappedSequenceObject.countReadsAll = mappedSequenceObject.mappedReads.length;
     mappedSequenceObject.countReadsUnique = uniques.size;
     mappedSequenceObject.percentageNonredundant = Number((100 * mappedSequenceObject.countReadsUnique / mappedSequenceObject.countReadsAll).toFixed(1));
 

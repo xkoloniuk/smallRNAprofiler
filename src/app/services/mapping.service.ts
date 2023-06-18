@@ -16,4 +16,9 @@ export class MappingService {
     this.mappingsSubject.next(updatedMappings);
   }
 
+  resetMappings() {
+    const emptyMappings: MappedSequenceObject[] = [];
+    this.mappingsSubject.next(emptyMappings);
+  }
+
 }

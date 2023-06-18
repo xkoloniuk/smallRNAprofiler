@@ -1,6 +1,5 @@
-<div class="w-screen h-3rem mb-4 bg-blue-50 flex justify-content-start align-items-center gap-6 pl-8">
-
-  <a routerLink="/">Start</a>
-  <a *ngIf="showPlotsLink" routerLink="/plots">Plots</a>
-
+<div class="w-screen pt-3 flex justify-content-end pr-3">
+  <!--  <p-button (onClick)="routeToHome()" label="Start"-->
+  <!--            styleClass="p-button-raised p-button-primary"></p-button>-->
+  <p-button (onClick)="resetStore()" label="Reset" styleClass="p-button-raised p-button-danger"></p-button>
 </div>

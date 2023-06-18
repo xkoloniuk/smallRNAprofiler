@@ -19,7 +19,6 @@ export class FileUploaderComponent {
   selectedFiles: { key: string, file: File }[] = [];
   public showProgressBar = false;
   public mapObjects: any[] = [];
-
   private myValueSubject = new BehaviorSubject<boolean>(true);
   showPlotsLink$ = this.myValueSubject.asObservable();
 
@@ -30,12 +29,10 @@ export class FileUploaderComponent {
     for (let file of event.files) {
       this.selectedFiles.push({key: file.name, file: file});
     }
-
   }
 
   async customHandler(files: File[]) {
     this.showProgressBar = true;
-
 
     files.forEach((file: File) => {
       this.fileReader.readFastaFile(file).then(data => {
@@ -43,8 +40,6 @@ export class FileUploaderComponent {
         this.mappingService.addMappings([this.fastaMappingToCoverage.splitMultiFasta(data)])
         this.showProgressBar = false;
         this.router.navigate(['../plots'])
-        this.linksService.updateData(true)
-
       })
     })
   }
