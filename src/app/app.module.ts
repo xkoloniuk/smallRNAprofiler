@@ -12,8 +12,9 @@ import {TablePlotsComponent} from './table-plots/table-plots.component';
 import {RouterModule} from "@angular/router";
 import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {ChartModule} from "primeng/chart";
-import { CoverageMappingComponent } from './coverage-mapping/coverage-mapping.component';
-import { SizeDistributionComponent } from './size-distribution/size-distribution.component';
+import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
+import {SizeDistributionComponent} from './size-distribution/size-distribution.component';
+import {DividerModule} from "primeng/divider";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SizeDistributionComponent } from './size-distribution/size-distribution
     CheckboxModule,
     FormsModule,
     RouterModule,
-    ChartModule
+    ChartModule,
+    DividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
