@@ -3,10 +3,21 @@
     <div class="p-2">{{mappings.length}} mappings received</div>
   </p-chip>
 
-  <p-chart *ngIf="mappings.length" [data]="basicData" [options]="basicOptions" height="40vh" type="bar"
-           width="90vw"></p-chart>
-  <div class="w-screen flex justify-content-start p-3">
-  </div>
-  <app-coverage-mapping></app-coverage-mapping>
+
+  <p-accordion [activeIndex]="[0]" [multiple]="true">
+    <p-accordionTab header="Overview of mappings">
+
+      <p-chart *ngIf="mappings.length" [data]="basicData" [options]="basicOptions" height="40vh" type="bar"
+               width="90vw"></p-chart>
+    </p-accordionTab>
+    <p-accordionTab header="Coverage and size distributions">
+
+
+      <app-coverage-mapping></app-coverage-mapping>
+
+    </p-accordionTab>
+
+  </p-accordion>
+
 </div>
 

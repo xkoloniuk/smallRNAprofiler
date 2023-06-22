@@ -18,6 +18,7 @@ import {DividerModule} from "primeng/divider";
 import {ChipModule} from "primeng/chip";
 import {BadgeModule} from "primeng/badge";
 import {TagModule} from "primeng/tag";
+import {AccordionModule} from "primeng/accordion";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {TagModule} from "primeng/tag";
     DividerModule,
     ChipModule,
     BadgeModule,
-    TagModule
+    TagModule,
+    AccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
