@@ -16,6 +16,8 @@ import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.comp
 import {SizeDistributionComponent} from './size-distribution/size-distribution.component';
 import {DividerModule} from "primeng/divider";
 import {ChipModule} from "primeng/chip";
+import {BadgeModule} from "primeng/badge";
+import {TagModule} from "primeng/tag";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {ChipModule} from "primeng/chip";
     RouterModule,
     ChartModule,
     DividerModule,
-    ChipModule
+    ChipModule,
+    BadgeModule,
+    TagModule
   ],
   providers: [],
   bootstrap: [AppComponent]
