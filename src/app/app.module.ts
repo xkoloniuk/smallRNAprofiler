@@ -15,6 +15,7 @@ import {ChartModule} from "primeng/chart";
 import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
 import {SizeDistributionComponent} from './size-distribution/size-distribution.component';
 import {DividerModule} from "primeng/divider";
+import {ChipModule} from "primeng/chip";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {DividerModule} from "primeng/divider";
     FormsModule,
     RouterModule,
     ChartModule,
-    DividerModule
+    DividerModule,
+    ChipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
