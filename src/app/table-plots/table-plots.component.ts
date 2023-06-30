@@ -41,6 +41,7 @@ export class TablePlotsComponent implements OnInit {
 
 
     this.basicOptions = {
+      indexAxis: 'y',
       plugins: {
         legend: {
           labels: {
