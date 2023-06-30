@@ -44,9 +44,7 @@ export class TablePlotsComponent implements OnInit {
       indexAxis: 'y',
       plugins: {
         legend: {
-          labels: {
-            color: textColor
-          }
+          display: false
         }
       },
       scales: {
