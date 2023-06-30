@@ -1,6 +1,7 @@
 import {Sequence} from "./Sequence";
 
 export interface MappedSequenceObject extends Sequence {
+  fileName: string;
   coverage: {
     redundant: Coverage,
     nonredundant: Coverage

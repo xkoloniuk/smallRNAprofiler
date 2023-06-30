@@ -36,10 +36,10 @@ export class FileUploaderComponent {
 
     files.forEach((file: File) => {
       this.fileReader.readFastaFile(file).then(data => {
-        this.mapObjects.push(this.fastaMappingToCoverage.splitMultiFasta(data))
-        this.mappingService.addMappings([this.fastaMappingToCoverage.splitMultiFasta(data)])
+        this.mapObjects.push(this.fastaMappingToCoverage.splitMultiFasta(data, file.name));
+        this.mappingService.addMappings([this.fastaMappingToCoverage.splitMultiFasta(data, file.name)]);
         this.showProgressBar = false;
-        this.router.navigate(['../plots'])
+        this.router.navigate(['../plots']);
       })
     })
   }
