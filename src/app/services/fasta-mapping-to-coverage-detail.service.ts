@@ -19,7 +19,7 @@ export class FastaMappingToCoverageDetailService {
 //   all zeroes are summed
 
   // splits obtain text stream into array strings like ['RefSeqName\nAGCTCGTCTGTGCT----\n', 'ReadName\n-----------AGTCTCGTCTCGGCTTCGCT------..--',..]
-  public splitMultiFasta(input: string[]) {
+  public splitMultiFasta(input: string[], fileName: string) {
     // const nameSequenceConcatenation = split(">");
     const reads: Sequence[] = [];
     const dnaSeq = /[ATCG]{18,32}/
@@ -29,6 +29,7 @@ export class FastaMappingToCoverageDetailService {
     //  here the reference object is instantiated
     const mappedSequenceObject: MappedSequenceObject = {
       name: '',
+      fileName: '',
       sequence: '',
       type: SequenceType.REFERENCE,
       length: 0,
@@ -61,7 +62,9 @@ export class FastaMappingToCoverageDetailService {
 
 
         const tmpSplit = nameSeqString.split('\n')
-        const fastaName = tmpSplit[0];
+
+        //windows retain \r, so it should be removed
+        const fastaName = tmpSplit[0].replace('\r', '');
         const fastaSeqLine = tmpSplit[1];
 
 
@@ -74,6 +77,7 @@ export class FastaMappingToCoverageDetailService {
           const zeroesArray: number[] = Array.from({length: referenceSequence.length}).fill(0)
           const positions = zeroesArray.map((_, i) => 1 + i)
 
+          mappedSequenceObject.fileName = fileName;
           mappedSequenceObject.name = fastaName;
           mappedSequenceObject.sequence = referenceSequence;
           mappedSequenceObject.length = referenceSequence.length;

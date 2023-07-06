@@ -13,7 +13,6 @@ import {RouterModule} from "@angular/router";
 import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {ChartModule} from "primeng/chart";
 import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
-import {SizeDistributionComponent} from './size-distribution/size-distribution.component';
 import {DividerModule} from "primeng/divider";
 import {ChipModule} from "primeng/chip";
 import {BadgeModule} from "primeng/badge";
@@ -28,7 +27,6 @@ import {AccordionModule} from "primeng/accordion";
     TablePlotsComponent,
     WelcomePageComponent,
     CoverageMappingComponent,
-    SizeDistributionComponent
   ],
   imports: [
     BrowserModule,

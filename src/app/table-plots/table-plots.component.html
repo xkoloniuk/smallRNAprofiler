@@ -1,23 +1,11 @@
 <div class="container flex flex-column align-items-center justify-content-center">
-  <p-chip>
-    <div class="p-2">{{mappings.length}} mappings received</div>
-  </p-chip>
+  <div class="w-screen flex justify-content-end p-3">
+    <span>{{mappings.length}} mappings received</span>
+  </div>
 
+  <p-chart *ngIf="mappings.length" [data]="basicData" [options]="basicOptions" height="30vh" type="bar"
+           width="90vw"></p-chart>
 
-  <p-accordion [activeIndex]="[0]" [multiple]="true">
-    <p-accordionTab header="Overview of mappings">
-
-      <p-chart *ngIf="mappings.length" [data]="basicData" [options]="basicOptions" height="40vh" type="bar"
-               width="90vw"></p-chart>
-    </p-accordionTab>
-    <p-accordionTab header="Coverage and size distributions">
-
-
-      <app-coverage-mapping></app-coverage-mapping>
-
-    </p-accordionTab>
-
-  </p-accordion>
-
+  <app-coverage-mapping class="pt-8"></app-coverage-mapping>
 </div>
 
