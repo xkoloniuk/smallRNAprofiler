@@ -62,7 +62,9 @@ export class FastaMappingToCoverageDetailService {
 
 
         const tmpSplit = nameSeqString.split('\n')
-        const fastaName = tmpSplit[0];
+
+        //windows retain \r, so it should be removed
+        const fastaName = tmpSplit[0].replace('\r', '');
         const fastaSeqLine = tmpSplit[1];
 
 
