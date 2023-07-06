@@ -1,10 +1,14 @@
 <ng-container *ngFor="let dataset of datasets">
-  <p>{{dataset.name}}</p>
+  <div class="mt-2 mb-1">
+
+  <span>{{dataset.name}} <br> </span>
+  <span class="text-bluegray-500 text-sm"> File: {{dataset.fileName}} </span>
+  </div>
   <div class="flex justify-content-between">
 
     <p-chart [data]="dataset.dataCoverage" [options]="basicOptions" height="40vh" type="bar" width="60vw"></p-chart>
     <p-divider layout="vertical"></p-divider>
-    <p-chart [data]="dataset.dataSize" [options]="basicOptions" height="40vh" type="bar" width="30vw"></p-chart>
+    <p-chart [data]="dataset.dataSize" [options]="basicOptionsforSizeDistribution" height="40vh" type="bar" width="30vw"></p-chart>
   </div>
 
   <hr class="my-4">

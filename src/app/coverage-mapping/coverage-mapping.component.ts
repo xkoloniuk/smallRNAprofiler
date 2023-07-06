@@ -14,7 +14,7 @@ export class CoverageMappingComponent implements OnInit {
   sizeDistributionDatasets: any[] = [];
 
   basicOptions: any;
-  basicOptionsWoLabel: any;
+  basicOptionsforSizeDistribution: any;
 
   constructor(private mappingService: MappingService) {
   }
@@ -27,6 +27,7 @@ export class CoverageMappingComponent implements OnInit {
 
         const objectForPlot = {
           name: mapping.name,
+          fileName: mapping.fileName,
           dataCoverage: {
             labels: mapping.coverage.redundant.position,
             datasets: [
@@ -91,7 +92,11 @@ export class CoverageMappingComponent implements OnInit {
       plugins: {
         legend: {
           labels: {
-            color: textColor
+            color: textColor,
+            font: {
+              size: 18,
+              lineHeight: 1.8,
+            },
           }
         }
       },
@@ -99,7 +104,11 @@ export class CoverageMappingComponent implements OnInit {
         y: {
           beginAtZero: true,
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            font: {
+              size: 18,
+              lineHeight: 1.8,
+            },
           },
           grid: {
             color: surfaceBorder,
@@ -108,27 +117,45 @@ export class CoverageMappingComponent implements OnInit {
         },
         x: {
           ticks: {
-            color: textColorSecondary
+            // color: textColorSecondary
+            callback: (val: number) => {
+              return (val % 500 === 0) ? val : null
+            },
+            font: {
+              size: 16,
+              lineHeight: 1.2,
+            },
           },
           grid: {
             color: surfaceBorder,
-            drawBorder: false
+            // drawBorder: false,
+            drawOnChartArea: true,
+            drawTicks: true
           }
         }
       }
     };
 
-    this.basicOptionsWoLabel = {
+    this.basicOptionsforSizeDistribution = {
       plugins: {
         legend: {
-          display: false
+          color: textColor,
+          font: {
+            size: 18,
+            lineHeight: 1.8,
+          },
+          // display: false
         }
       },
       scales: {
         y: {
           beginAtZero: true,
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            font: {
+              size: 16,
+              lineHeight: 1.2,
+            },
           },
           grid: {
             color: surfaceBorder,
@@ -137,7 +164,11 @@ export class CoverageMappingComponent implements OnInit {
         },
         x: {
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            font: {
+              size: 16,
+              lineHeight: 1.2,
+            },
           },
           grid: {
             color: surfaceBorder,
