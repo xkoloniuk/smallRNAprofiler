@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Direction, Sequence, SequenceType} from "../../interfaces/Sequence";
 import {Coverage, MappedSequenceObject} from "../../interfaces/MappedSequenceObject";
+import {SequenceService} from "./sequence.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,10 @@ import {Coverage, MappedSequenceObject} from "../../interfaces/MappedSequenceObj
 
 export class FastaMappingToCoverageDetailService {
 
-  constructor() {
+  constructor(private sequence: SequenceService) {
   }
 
-  // it obtains refSeqLenth and coverage object {positions[], minus[], plus[]}
+// it obtains refSeqLenth and coverage object {positions[], minus[], plus[]}
 // in forEach loops through all three of them and
 // calculates zero coverage if for current position:
 // if both plus and minus coverage are zero then it counts as zero for the position
@@ -94,13 +95,13 @@ export class FastaMappingToCoverageDetailService {
           return
         }
 
-        const fastaTrimmedReadSequence = fastaSeqLine.match(dnaSeq)?.[0] ?? '';
+        const fastaTrimmedReadSequence = fastaSeqLine.match(dnaSeq)?.[0].toUpperCase() ?? '';
         const gapsBeforeSeq = fastaSeqLine.match(regexGaps)?.[0] ?? '';
 
         const read: Sequence = {
           name: fastaName,
           type: SequenceType.READ,
-          sequence: fastaTrimmedReadSequence,
+          sequence: fastaName.endsWith('reversed)') ? this.sequence.reverseComplement(fastaTrimmedReadSequence) : fastaTrimmedReadSequence,
           redundant: uniqueSet.has(fastaTrimmedReadSequence) ? !!uniqueSet.add(fastaTrimmedReadSequence) : false,
           length: fastaTrimmedReadSequence.length,
           mapStart: gapsBeforeSeq?.length || 0,
