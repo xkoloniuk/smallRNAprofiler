@@ -4,7 +4,7 @@ import {FileUploaderComponent} from "./file-uploader/file-uploader.component";
 import {TablePlotsComponent} from "./table-plots/table-plots.component";
 
 const routes: Routes = [
-  {path: '/', component: FileUploaderComponent},
+  {path: '', component: FileUploaderComponent},
   {path: 'home', component: FileUploaderComponent},
   {path: 'plots', component: TablePlotsComponent},
 ];
