@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MappedSequenceObject} from "../../interfaces/MappedSequenceObject";
 import {MappingService} from "../services/mapping.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-table-plots',
@@ -14,14 +15,19 @@ export class TablePlotsComponent implements OnInit {
 
   basicOptions: any;
 
-  constructor(private mappingService: MappingService) {
+  constructor(private mappingService: MappingService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.mappingService.mappings$.subscribe((mappings) => {
       this.mappings = mappings
+
+      if(!mappings.length) {
+        this.router.navigate(['home'])
+      }
+
       this.basicData = {
-        labels: mappings.map(mapping => mapping.name),
+        labels: mappings.map(mapping => mapping.name + ': ' +  mapping.fileName),
         datasets: [
           {
             label: 'Reads per mapping',
