@@ -14,10 +14,7 @@ import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {ChartModule} from "primeng/chart";
 import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
 import {DividerModule} from "primeng/divider";
-import {ChipModule} from "primeng/chip";
-import {BadgeModule} from "primeng/badge";
 import {TagModule} from "primeng/tag";
-import {AccordionModule} from "primeng/accordion";
 
 @NgModule({
   declarations: [
@@ -37,10 +34,8 @@ import {AccordionModule} from "primeng/accordion";
     RouterModule,
     ChartModule,
     DividerModule,
-    ChipModule,
-    BadgeModule,
-    TagModule,
-    AccordionModule
+    DividerModule,
+    TagModule
   ],
   providers: [],
   bootstrap: [AppComponent]
