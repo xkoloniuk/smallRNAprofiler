@@ -61,7 +61,7 @@ export class CoverageMappingComponent implements OnInit {
           }
         };
 
-        if (this.datasets.some(dataset => dataset.name === objectForPlot.name)) {
+        if (this.datasets.some(dataset => dataset.name === objectForPlot.name && dataset.fileName === objectForPlot.fileName)) {
           return
         }
         this.datasets.push(objectForPlot)

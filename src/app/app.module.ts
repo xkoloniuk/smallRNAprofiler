@@ -14,6 +14,7 @@ import {WelcomePageComponent} from './welcome-page/welcome-page.component';
 import {ChartModule} from "primeng/chart";
 import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
 import {DividerModule} from "primeng/divider";
+import {TagModule} from "primeng/tag";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {DividerModule} from "primeng/divider";
     FormsModule,
     RouterModule,
     ChartModule,
-    DividerModule
+    DividerModule,
+    TagModule
   ],
   providers: [],
   bootstrap: [AppComponent]
