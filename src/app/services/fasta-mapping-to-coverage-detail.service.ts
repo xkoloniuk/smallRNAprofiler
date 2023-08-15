@@ -23,12 +23,13 @@ export class FastaMappingToCoverageDetailService {
   public splitMultiFasta(input: string[], fileName: string) {
     // const nameSequenceConcatenation = split(">");
     const reads: Sequence[] = [];
-    const dnaSeq = /[ATCG]{18,32}/
-    const regexGaps = /^-*/
+    const dnaSeq = /[ATCG][ATCG-]{17,31}[ATCG]/
+    const regexFivePrimeGaps = /^-*/
     const uniqueSet = new Set
 
     //  here the reference object is instantiated
     const mappedSequenceObject: MappedSequenceObject = {
+      containsGaps: false,
       name: '',
       fileName: '',
       sequence: '',
@@ -53,7 +54,7 @@ export class FastaMappingToCoverageDetailService {
           plus: [],
           position: []
         },
-      },
+      }
     }
 
 
@@ -95,15 +96,19 @@ export class FastaMappingToCoverageDetailService {
           return
         }
 
-        const fastaTrimmedReadSequence = fastaSeqLine.match(dnaSeq)?.[0].toUpperCase() ?? '';
-        const gapsBeforeSeq = fastaSeqLine.match(regexGaps)?.[0] ?? '';
+        const fastaTrimmedReadSequenceWithPotentialGaps = fastaSeqLine.match(dnaSeq)?.[0].toUpperCase() ?? '';
+        const gapsInRead = fastaTrimmedReadSequenceWithPotentialGaps.includes('-');
+        const fastaTrimmedReadSequenceWithoutGaps = fastaTrimmedReadSequenceWithPotentialGaps.replace(/-/g, '')
+        const gapsBeforeSeq = fastaSeqLine.match(regexFivePrimeGaps)?.[0] ?? '';
+
 
         const read: Sequence = {
           name: fastaName,
           type: SequenceType.READ,
-          sequence: fastaName.endsWith('reversed)') ? this.sequence.reverseComplement(fastaTrimmedReadSequence) : fastaTrimmedReadSequence,
-          redundant: uniqueSet.has(fastaTrimmedReadSequence) ? !!uniqueSet.add(fastaTrimmedReadSequence) : false,
-          length: fastaTrimmedReadSequence.length,
+          sequence: fastaName.endsWith('reversed)') ? this.sequence.reverseComplement(fastaTrimmedReadSequenceWithoutGaps) : fastaTrimmedReadSequenceWithoutGaps,
+          redundant: uniqueSet.has(fastaTrimmedReadSequenceWithoutGaps) ? !!uniqueSet.add(fastaTrimmedReadSequenceWithoutGaps) : false,
+          containsGaps: gapsInRead,
+          length: fastaTrimmedReadSequenceWithoutGaps.length,
           mapStart: gapsBeforeSeq?.length || 0,
           orientation: fastaName.endsWith('reversed)') ? Direction.REVERSE : Direction.FORWARD,
         }
@@ -114,7 +119,6 @@ export class FastaMappingToCoverageDetailService {
       }
     )
     const uniques = new Set(mappedSequenceObject.mappedReads.flatMap(({sequence}) => sequence))
-
     mappedSequenceObject.countReadsReverse = mappedSequenceObject.mappedReads.filter(read => read.orientation === Direction.REVERSE).length;
     mappedSequenceObject.countReadsForward = mappedSequenceObject.mappedReads.filter(read => read.orientation === Direction.FORWARD).length;
     mappedSequenceObject.ratioFrwRev = Number((mappedSequenceObject.countReadsForward / mappedSequenceObject.countReadsReverse).toFixed(1));

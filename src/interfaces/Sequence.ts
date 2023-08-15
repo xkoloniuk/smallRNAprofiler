@@ -4,6 +4,7 @@ export interface Sequence {
   orientation?: Direction,
   length: number,
   redundant?: boolean,
+  containsGaps: boolean,
   mapStart?: number,
   type: SequenceType
 }
