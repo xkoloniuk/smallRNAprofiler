@@ -13,6 +13,7 @@ export class CoverageMappingComponent implements OnInit {
   datasets: any[] = [];
   sizeDistributionDatasets: any[] = [];
 
+
   basicOptions: any;
   basicOptionsforSizeDistribution: any;
 
@@ -28,6 +29,7 @@ export class CoverageMappingComponent implements OnInit {
         const objectForPlot = {
           name: mapping.name,
           fileName: mapping.fileName,
+          gaps: mapping.gaps,
           dataCoverage: {
             labels: mapping.coverage.redundant.position,
             datasets: [

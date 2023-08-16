@@ -15,6 +15,7 @@ import {ChartModule} from "primeng/chart";
 import {CoverageMappingComponent} from './coverage-mapping/coverage-mapping.component';
 import {DividerModule} from "primeng/divider";
 import {TagModule} from "primeng/tag";
+import {BadgeModule} from "primeng/badge";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {TagModule} from "primeng/tag";
     RouterModule,
     ChartModule,
     DividerModule,
-    TagModule
+    TagModule,
+    BadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
