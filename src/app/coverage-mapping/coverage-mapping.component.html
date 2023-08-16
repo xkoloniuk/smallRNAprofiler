@@ -1,7 +1,10 @@
 <ng-container *ngFor="let dataset of datasets">
   <div class="mt-2 mb-3">
 
-  <span>{{dataset.name}} <br> </span>
+  <div class="flex justify-content-between">
+    <span >{{dataset.name}} </span> <p-badge *ngIf="dataset.gaps" severity="warning" iconPos="top" [value]="'Note: There were introduced gaps in '+ dataset.countedGaps +' mapped reads (' + (dataset.countedGapsInNonredundantReads === dataset.countedGaps ? 'all' : dataset.countedGapsInNonredundantReads) + ' nonredundant)!'"></p-badge>
+
+  </div>
   <span class="text-bluegray-500 text-sm"> File: {{dataset.fileName}} </span>
   </div>
   <div class="flex justify-content-between">

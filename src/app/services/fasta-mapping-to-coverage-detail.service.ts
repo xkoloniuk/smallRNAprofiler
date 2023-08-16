@@ -29,6 +29,7 @@ export class FastaMappingToCoverageDetailService {
 
     //  here the reference object is instantiated
     const mappedSequenceObject: MappedSequenceObject = {
+      gaps: false,
       containsGaps: false,
       name: '',
       fileName: '',
@@ -98,9 +99,12 @@ export class FastaMappingToCoverageDetailService {
 
         const fastaTrimmedReadSequenceWithPotentialGaps = fastaSeqLine.match(dnaSeq)?.[0].toUpperCase() ?? '';
         const gapsInRead = fastaTrimmedReadSequenceWithPotentialGaps.includes('-');
+      if (!mappedSequenceObject.gaps && gapsInRead) {
+        mappedSequenceObject.gaps = true
+      }
+
         const fastaTrimmedReadSequenceWithoutGaps = fastaTrimmedReadSequenceWithPotentialGaps.replace(/-/g, '')
         const gapsBeforeSeq = fastaSeqLine.match(regexFivePrimeGaps)?.[0] ?? '';
-
 
         const read: Sequence = {
           name: fastaName,

@@ -6,6 +6,7 @@ export interface MappedSequenceObject extends Sequence {
     redundant: Coverage,
     nonredundant: Coverage
   },
+  gaps: boolean,
   countReadsAll: number,
   countReadsUnique: number;
   countReadsForward: number,
