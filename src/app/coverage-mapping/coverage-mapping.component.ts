@@ -30,6 +30,8 @@ export class CoverageMappingComponent implements OnInit {
           name: mapping.name,
           fileName: mapping.fileName,
           gaps: mapping.gaps,
+          countedGaps: mapping.mappedReads.filter(read => read.containsGaps).length,
+          countedGapsInNonredundantReads: mapping.mappedReads.filter(read => read.containsGaps && !read.redundant).length,
           dataCoverage: {
             labels: mapping.coverage.redundant.position,
             datasets: [
