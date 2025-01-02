@@ -3,6 +3,7 @@ A fully front-end application for analyzing alignments of small RNA data in FAST
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
 Test application can be accessed here - [xkoloniuk.github.io/smallRNAprofiler](https://xkoloniuk.github.io/smallRNAprofiler)
+Manual and sample fasta data could be found in src/assets folder.
 
 
 
