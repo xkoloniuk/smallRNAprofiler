@@ -1,6 +1,11 @@
 # SmallRNAprofiler
+A fully front-end application for analyzing alignments of small RNA data in FASTA format without backend integration. Multiple files can be uploaded , and the app generates interactive coverage plots (Chart.js) to visualize small RNA reads on both positive and negative strands. It also provides bar plots to display the size distribution of the reads, offering a seamless browser-based experience for exploring small RNA datasets.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
+Test application can be accessed here - [xkoloniuk.github.io/smallRNAprofiler](https://xkoloniuk.github.io/smallRNAprofiler)
+
+
+
 
 ## Development server
 
